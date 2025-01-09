@@ -15,4 +15,4 @@ _winsvc.prg{win}
 -main=WinMain{win}
 hbwin.hbc{win}
 
-#-prgflag=-DHB_EXTERN
+-prgflag=-DHB_EXTERN
