@@ -68,6 +68,8 @@ static PHB_BIO PHB_BIO_create( BIO * bio, void * hStrRef )
 
 static void PHB_BIO_free( PHB_BIO hb_bio )
 {
+   if( hb_bio->bio )
+      BIO_free( hb_bio->bio );
    if( hb_bio->hStrRef )
       hb_itemFreeCRef( hb_bio->hStrRef );
 
@@ -222,7 +224,7 @@ HB_FUNC( BIO_SET )
 
    if( bio && hb_BIO_METHOD_is( 2 ) )
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || \
-    defined( LIBRESSL_VERSION_NUMBER )
+    ( defined( LIBRESSL_VERSION_NUMBER ) && LIBRESSL_VERSION_NUMBER < 0x30900000L )
       hb_retni( BIO_set( bio, hb_BIO_METHOD_par( 2 ) ) );
 #else
       hb_retni( 0 );
@@ -614,13 +616,19 @@ HB_FUNC( BIO_PUTS )
 
 HB_FUNC( BIO_FREE )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcBIOFuncs, 1 );
+   HB_BIO ** ptr = ( HB_BIO ** ) hb_parptrGC( &s_gcBIOFuncs, 1 );
 
-   if( ph )
+   if( ptr )
    {
-      BIO * bio = ( BIO * ) *ph;
-      *ph = NULL;
-      hb_retni( bio ? BIO_free( bio ) : 0 );
+      int result = 0;
+
+      if( *ptr )
+      {
+         PHB_BIO_free( *ptr );
+         *ptr = NULL;
+         result = 1;
+      }
+      hb_retni( result );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -762,7 +770,8 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
     OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
       /* Fix for header regression */
       hb_retnl( BIO_ctrl( bio, BIO_C_GET_CONNECT, 3, NULL ) );
-#elif OPENSSL_VERSION_NUMBER >= 0x1010007fL
+#elif OPENSSL_VERSION_NUMBER >= 0x1010007fL && \
+      ! defined( LIBRESSL_VERSION_NUMBER )
       const BIO_ADDR * ba = BIO_get_conn_address( bio );
       hb_retnl( ba ? hb_socketNToHS( BIO_ADDR_rawport( ba ) ) : 0 );
 #else
