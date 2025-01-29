@@ -72,6 +72,9 @@
 #endif
 
 #include "hbssl.h"
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#include <openssl/x509v3.h>
+#endif
 
 #include "hbapiitm.h"
 #include "hbvm.h"
@@ -1429,7 +1432,21 @@ HB_FUNC( SSL_GET_CERTIFICATE )
       SSL * ssl = hb_SSL_par( 1 );
 
       if( ssl )
-         hb_X509_ret( SSL_get_certificate( ssl ), HB_FALSE );
+      {
+         X509 * x509 = SSL_get_certificate( ssl );
+
+         if( x509 )
+         {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+            X509_up_ref( x509 );
+#else
+            x509 = X509_dup( x509 );
+            if( x509 )
+               X509_check_purpose( x509, -1, 0 );
+#endif
+         }
+         hb_X509_ret( x509 );
+      }
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
@@ -1442,7 +1459,7 @@ HB_FUNC( SSL_GET_PEER_CERTIFICATE )
       SSL * ssl = hb_SSL_par( 1 );
 
       if( ssl )
-         hb_X509_ret( SSL_get_peer_certificate( ssl ), HB_TRUE );
+         hb_X509_ret( SSL_get_peer_certificate( ssl ) );
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
