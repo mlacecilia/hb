@@ -7,6 +7,10 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-02-11 04:21 UTC+0100 Antonio Linares (alinares/at/fivetechsoft.com)
+  * contrib/hbcurl/core.c
+    + implemented required explicit cast reported by Lorenzo Fiorini
+
 2025-02-03 12:26 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * include/hbdefs.h
   * contrib/sddsqlt3/core.c
