@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-02-21 11:16 UTC+0100 Aleksander Czajczynski (hb fki.pl)
+  * contrib/hbcurl/hbcurl.hbp
+    + added Windows architecture specific libcurl names:
+      libcurl-x64.dll, libcurl-arm64.dll as suggested
+      by @carles9000 in #382
+
 2025-02-11 04:21 UTC+0100 Antonio Linares (alinares/at/fivetechsoft.com)
   * contrib/hbcurl/core.c
     + implemented required explicit cast reported by Lorenzo Fiorini
