@@ -7,6 +7,22 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-03-25 13:54 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbcurl/core.c
+    ! pacified warnings
+
+  * contrib/hbssl/ssl.c
+  * contrib/hbssl/sslctx.c
+    ! use 64-bit integers in SSL_[CTX]_[s|g]et_options() for OpenSSL >= 3.0
+
+2025-03-20 06:30 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/rtl/cdpapihb.c
+    ! fixed hb_transalte() to not clear passed string
+      when neither CPIN nor CPOUT is set
+
+  * src/rtl/hbgtcore.c
+    ! fixed hb_gtAttach() to properly work with empty GT pointer
+
 2025-02-21 11:16 UTC+0100 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbcurl/hbcurl.hbp
     + added Windows architecture specific libcurl names:
