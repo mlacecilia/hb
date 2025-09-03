@@ -7,6 +7,17 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-09-03 12:21 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/rtl/cdpapi.c
+    + added fallback translation table for different variants of Latin
+      character, now when translation is made between different encoding
+      and the variant of Latin character does not exist in destination
+      code page then it's translated to their base Latin form, i.e.:
+         hb_utf8ToStr( "ĄĆĘŁŃÓŚŹŻąćęłńóśźż", "EN" ) -> "ACELNOSZZacelnószz"
+
+  * tests/uc16_gen.prg
+    ; updated comment
+
 2025-08-29 12:49 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbbmp/core.c
   * contrib/hbbmp/hbbmp.ch
