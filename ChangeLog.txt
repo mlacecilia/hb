@@ -7,6 +7,146 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-09-16 13:16 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbcurl/core.c
+    ! pacified warning
+
+2025-09-10 09:08 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbbmp/core.c
+    ! pacified BCC warnings
+
+2025-09-09 19:55 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbbmp/core.c
+    ! pacified BCC warnings
+
+  * src/vm/macro.c
+    * minor modification to test if it can pacify false warning in recent GCC
+
+2025-09-09 18:58 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/3rd/png/pngrutil.c
+    ! moved PNG_UNUSED() before return statement to avoid BCC W8070 Warning
+
+  * src/3rd/png/png.diff
+    ! rediffed with
+         hbmk2 ../../../bin/3rdpatch.hb -rediff
+
+2025-09-09 18:13 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/3rd/zlib/Makefile
+  * src/3rd/zlib/README
+  * src/3rd/zlib/deflate.c
+  * src/3rd/zlib/deflate.h
+  * src/3rd/zlib/gzguts.h
+  * src/3rd/zlib/gzlib.c
+  * src/3rd/zlib/inflate.c
+  * src/3rd/zlib/inftrees.c
+  * src/3rd/zlib/inftrees.h
+  * src/3rd/zlib/trees.c
+  * src/3rd/zlib/zconf.h
+  * src/3rd/zlib/zlib.h
+  * src/3rd/zlib/zutil.h
+  * src/3rd/zlib/zlib.diff
+    * updated to version 1.3.1
+
+2025-09-09 17:38 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbmlzo/3rd/minilzo/README
+  * contrib/hbmlzo/3rd/minilzo/lzoconf.h
+  * contrib/hbmlzo/3rd/minilzo/lzodefs.h
+  * contrib/hbmlzo/3rd/minilzo/minilzo.c
+  - contrib/hbmlzo/3rd/minilzo/minilzo.diff
+  * contrib/hbmlzo/3rd/minilzo/minilzo.h
+  * contrib/hbmlzo/3rd/minilzo/minilzo.hbp
+    * updated to version 2.10
+
+2025-09-09 16:36 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/3rd/png/LICENSE
+  * src/3rd/png/Makefile
+  * src/3rd/png/png.c
+  * src/3rd/png/png.diff
+  * src/3rd/png/png.h
+  * src/3rd/png/pngconf.h
+  * src/3rd/png/pngdebug.h
+  * src/3rd/png/pngerror.c
+  * src/3rd/png/pngget.c
+  * src/3rd/png/pnginfo.h
+  * src/3rd/png/pnglconf.h
+  * src/3rd/png/pngmem.c
+  * src/3rd/png/pngpread.c
+  * src/3rd/png/pngpriv.h
+  * src/3rd/png/pngread.c
+  * src/3rd/png/pngrio.c
+  * src/3rd/png/pngrtran.c
+  * src/3rd/png/pngrutil.c
+  * src/3rd/png/pngset.c
+  * src/3rd/png/pngstru.h
+  * src/3rd/png/pngtrans.c
+  * src/3rd/png/pngwio.c
+  * src/3rd/png/pngwrite.c
+  * src/3rd/png/pngwtran.c
+  * src/3rd/png/pngwutil.c
+    * updated to version 1.6.50
+
+  * contrib/hbmlzo/3rd/minilzo/minilzo.c
+  + contrib/hbmlzo/3rd/minilzo/minilzo.diff
+    ! fixed compilation with ISO C++ 17 compilers
+
+2025-09-09 13:50 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * include/hbdefs.h
+    + added new types HB_WCHAR16 and HB_WCHAR32, existing type HB_WCHAR
+      is mapped to HB_WCHAR16 (just like before)
+
+  * include/hbapicdp.h
+  * src/harbour.def
+  * src/rtl/cdpapi.c
+    + added new C functions for encoding and decoding UTF-8 string using
+      which HB_WCHAR32:
+         int hb_cdpU32CharToUTF8( char * szUTF8, HB_WCHAR32 wc );
+         HB_BOOL hb_cdpUTF8GetU32( const char * pSrc, HB_SIZE nLen,
+                                   HB_SIZE * pnIndex, HB_WCHAR32 * pWC );
+         HB_BOOL hb_cdpUTF8GetUCS( const char * pSrc, HB_SIZE nLen,
+                                   HB_SIZE * pnIndex, HB_WCHAR32 * pWC );
+         HB_BOOL hb_cdpUTF8GetU16( const char * pSrc, HB_SIZE nLen,
+                                   HB_SIZE * pnIndex, HB_WCHAR16 * pWC );
+         HB_BOOL hb_cdpUTF8Validate( const char * pSrc, HB_SIZE nLen );
+      They support full UCS and are much more restrictive against errors and
+      wrong UTF-8 encoding, i.e. now overlong encoding is forbidden.
+      The wrong characters are translated to 0xFFFD and later if such
+      character does not exist in final CP to '?' ASCII character.
+    * declaration of the following UTF-8 C functions have been changed to
+      operate on HB_WCHAR32 instead of HB_WCHAR:
+         int hb_cdpUTF8CharSize( HB_WCHAR32 wc );
+         HB_WCHAR32 hb_cdpUTF8StringPeek( const char * pSrc, HB_SIZE nLen,
+                                          HB_SIZE nPos );
+    * the following C functions have been changed to internally operate on
+      HB_WCHAR32 instead of HB_WCHAR:
+         hb_cdpUTF8StringLength()
+         hb_cdpUTF8StringAt()
+         hb_cdpUTF8StringSubstr()
+    * the following C functions have been changed to use new hb_cdpUTF8GetU*()
+      instead of step by step decoding with hb_cdpUTF8ToU16NextChar()
+         hb_cdpStrToUTF8Disp()
+         hb_cdpUTF8AsStrLen()
+         hb_cdpUTF8ToStr()
+         hb_cdpStrToU16()
+         hb_cdpUtf8Char()
+    * use HB_CDP_ERROR_* macros to mark wrong encoding
+
+  * src/rtl/cdpapihb.c
+    * the following UTF-8 C functions have been changed to operate on
+      HB_WCHAR32 instead of HB_WCHAR:
+         hb_utf8Chr()
+         hb_utf8Asc()
+         hb_utf8Poke()
+         hb_utf8Peek()
+      Other UTF-8 PRG functions have been adopted to HB_WCHAR32 by changes
+      in corresponding C functions.
+
+  * src/codepage/cp_utf8.c
+    * use new function hb_cdpUTF8GetU16() to decode UTF-8 strings in UTF8EX CP
+
+  * src/rtl/arc4.c
+    + added new macro HB_NO_SYSCTL which allow to disable sysctl() in Linux
+      builds for GLIBC < 2.30
+
 2025-09-03 12:21 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * src/rtl/cdpapi.c
     + added fallback translation table for different variants of Latin
