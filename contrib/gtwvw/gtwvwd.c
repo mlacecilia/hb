@@ -810,7 +810,7 @@ static int hb_gt_wvw_DispCount( PHB_GT pGT )
 }
 
 
-static void hb_gt_wvw_Replicate( PHB_GT pGT, int iRow, int iCol, int bColor, BYTE bAttr, USHORT usChar, ULONG ulLen )
+static void hb_gt_wvw_Replicate( PHB_GT pGT, int iRow, int iCol, int bColor, BYTE bAttr, USHORT usChar, HB_SIZE ulLen )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_Replicate( %hu, %hu, %hu, %i, %lu )", iRow, iCol, bColor, bAttr, usChar, ulLen ) );
 
@@ -826,7 +826,7 @@ static void hb_gt_wvw_Replicate( PHB_GT pGT, int iRow, int iCol, int bColor, BYT
 }
 
 
-static void hb_gt_wvw_PutText( PHB_GT pGT, int iRow, int iCol, int bColor, const char * pText, ULONG ulLen )
+static int hb_gt_wvw_PutText( PHB_GT pGT, int iRow, int iCol, int bColor, const char * pText, HB_SIZE ulLen )
 {
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_wvw_PutText(%hu, %hu, %p, %lu, %hu)", iRow, iCol, pText, ulLen, bColor ) );
 
@@ -998,7 +998,7 @@ static BOOL hb_gt_wvw_SetMode( PHB_GT pGT, int iRow, int iCol )
 }
 
 
-static void hb_gt_wvw_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * pText, ULONG ulLength )
+static void hb_gt_wvw_WriteAt( PHB_GT pGT, int iRow, int iCol, const char * pText, HB_SIZE ulLength )
 {
    HB_GTSELF_PUTTEXT( pGT, iRow, iCol, ( BYTE ) HB_GTSELF_GETCOLOR( pGT ), pText, ulLength );
 
@@ -1235,7 +1235,7 @@ static void hb_gt_wvw_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 static void hb_gt_wvw_mouse_Init( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED( pGT );
-   hb_wvw_vmouse_Init();
+   // hb_wvw_vmouse_Init();  //wvwclip
    hb_gt_wvwCreateToolTipWindow( s_pWvwData->s_pWindows[ 0 ] );
 
 }
@@ -1244,7 +1244,7 @@ static void hb_gt_wvw_mouse_Init( PHB_GT pGT )
 static void hb_gt_wvw_mouse_Exit( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED( pGT );
-   hb_wvw_vmouse_Exit();
+   // hb_wvw_vmouse_Exit();  //wvwclip
 }
 
 

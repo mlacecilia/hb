@@ -432,7 +432,7 @@ HB_FUNC( WVW_RBCREATE )
                           szBitmap, uiBitmap, hb_param( 8, HB_IT_BLOCK ),
                           iOffTop, iOffLeft, iOffBottom, iOffRight,
                           dStretch, bMap3Dcolors,
-                          BS_AUTORADIOBUTTON /*| WS_GROUP*/ );
+                          BS_AUTORADIOBUTTON | hb_parni( 13 ) /* nStyle */ ); //wvwclip
    hb_retnl( ( LONG ) uiPBid );
 }
 
@@ -2528,4 +2528,15 @@ HB_FUNC( WVW_LOWORD )
 HB_FUNC( WVW_HIWORD )
 {
    hb_retni( ( int ) ( ( hb_parnl( 1 ) >> 16 ) & 0xFFFF ) );
+}
+
+HB_FUNC( WVW_GETCTRLHANDLE )
+{
+   UINT usWinNum = WVW_WHICH_WINDOW;
+   BYTE bStyle = 0;
+   hb_retnl( ( LONG ) FindControlHandle( usWinNum,
+             ( BYTE ) hb_parni( 2 ),
+             ( UINT ) hb_parni( 3 ),
+             &bStyle) );
+   hb_storni( bStyle, 4 );
 }
