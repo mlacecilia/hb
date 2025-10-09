@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-10-04 09:09 UTC+0100 Antonio Linares (antonio.fivetech/at/gmail.com)
+  * config/bin.mk
+    ! fixed duplicate library warnings on macOS by defining platform-specific
+      HB_LIBS_TPL template without duplicate hbrtl and hbvmmt libraries
+
+  * utils/hbmk2/hbmk2.prg
+    ! fixed timing of macOS-specific library deduplication in aLIB_BASE_RDD
+      and aLIB_BASE_RDD_MT arrays to occur after platform detection, eliminating
+      duplicate library warnings during program compilation
+
 2025-09-16 13:16 UTC+0200 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbcurl/core.c
     ! pacified warning
