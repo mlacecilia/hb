@@ -7,6 +7,37 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-10-16 22:04 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * utils/hbmk2/hbmk2.prg
+    * remaining LEFTEQUAL() changed to hb_LeftEq() calls
+    - removed LEFTEQUAL() macro
+
+2025-10-16 21:40 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * config/global.mk
+    * follow up to previous, define __ARCH64BIT__ for .prg files
+      if applicable during first stage done by GNU Make
+
+    * consider Alpha a 64-bit CPU too when it's a cross-build target
+      (untested)
+
+  * utils/hbmk2/hbmk2.prg
+    * updated stored list of Visual Studio (2013-2022) versions to C comp
+      revisions, which could be used in .hbp files HB_COMP_VER macro
+
+    ; https://learn.microsoft.com/en-us/cpp/overview/compiler-versions
+      more detailed versioning available if someone is interested in that
+      please submit a patch that would translate C compiler path to
+      version according to the linked rules - MSVC now has rolling
+      releases
+
+2025-10-16 21:09 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * utils/hbmk2/hbmk2.prg
+    * updated approach to define __ARCH64BIT__ at .prg level when
+      cross-compiling for such architecture.
+      Thanks to Alexey Zapolskiy for noticing.
+
+    + local hb_RightEq() deployed as macro
+
 2025-10-04 09:09 UTC+0100 Antonio Linares (antonio.fivetech/at/gmail.com)
   * config/bin.mk
     ! fixed duplicate library warnings on macOS by defining platform-specific
