@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-10-20 17:42 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * contrib/hbssl/hbssl.hbc
+    ! actually lib* prefix should stay on win/msvc platform
+      OpenSSL builds. Thanks to Mario H. Sabado for testing
+      and feedback.
+
 2025-10-20 10:47 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * .github/workflows/windows-ci.yml
     * encourage to test OpenSSL
