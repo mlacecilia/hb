@@ -7,6 +7,139 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-10-20 10:47 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * .github/workflows/windows-ci.yml
+    * encourage to test OpenSSL
+
+  * contrib/hbssl/hbssl.hbc
+    * treat Microsoft Visual Studio 2017 or newer can use
+      the latest OpenSSL lib. That's very loose approximation,
+      but hopefully better than before. If you are using such
+      compiler please update your OpenSSL library.
+
+    % deduplicated the rules, leftovers from old static "_s" suffixing
+
+2025-10-19 22:48 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * .github/workflows/windows-ci.yml
+    + add openssl-devel to MSYS2 CI
+
+2025-10-19 22:12 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * contrib/hbssl/hbssl.h
+  * contrib/hbssl/hbssl.hbm
+  * contrib/hbssl/ssl.c
+    ! HB_OPENSSL_HAS_APPLINK was never checked,
+      defining HB_OPENSSL_NO_APPLINK didn't do anything
+
+    * make current OpenSSL 3.6.0 build under fresh MSYS2
+      shell. MSYS2 does not distribute applink.c, claiming
+      MingGW C runtime is safe for operation without it.
+      Have to define HB_OPENSSL_NO_APPLINK and additional
+      workaround for lacking __int64 type when including
+      ssl.h. If you need similar workround outside of
+      MSYS2 shell, setenv: HB_USER_CFLAGS=-DHB_OPENSSL_MSYS
+
+      packages needed: openssl-devel (for headers)
+                       mingw-w64-x86_64-openssl (for libs)
+                       mingw-w64-aarch64-openssl
+
+  * contrib/hbssl/hbssl.hbc
+    * using Clang or Zig compiler on Windows, build will
+      now reference libssl and libcrypto instead of old
+      ssleay32/libeay32 pair when linking.
+
+  * config/win/zig.mk
+    % unnecessary check
+
+2025-10-18 23:15 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  + config/bsd/zig-noauto.mk
+  + config/bsd/zig.mk
+  + config/common/zig-noauto.mk
+  + config/common/zig.mk
+  + config/darwin/zig-noauto.mk
+  + config/darwin/zig.mk
+  + config/linux/zig-noauto.mk
+  + config/linux/zig.mk
+  + config/win/zig-noauto.mk
+  + config/win/zig.mk
+  * config/global.mk
+  * utils/hbmk2/hbmk2.prg
+    ! typo fixed in Alpha target (this path was really untested)
+
+    + added support for using Zig as LLVM C compiler frontend. Recent
+      idea comes from Marcos Gambeta Harbour++ fork, though I haven't
+      borrowed any code. Here the functionalty is complete, whole
+      Harbour source tree can be compiled, together with shared libs.
+
+      Zig has unique ability of managing cross-compiled builds, mostly
+      without downloading anything else. For example you should be able
+      to easily make a Linux+musl libc build of your Harbour application
+      that will run on any distribution with Linux kernel >= 2.6.39 (untested).
+
+      Zig is not auto-detected by the Harbour build process, HB_COMPILER=zig
+      has to be defined. The only exception is that, hbmk2 on Windows can
+      locate "zig.exe" while building final Harbour applications. Usually
+      there are no conflicting tools on PATH on this platform.
+
+      After downloading zig from https://ziglang.org/download/
+      specific to your OS, assuming the tool being unpacked to
+      /home/user/zig or C:\zig, usage is as follows:
+
+      Linux/BSD native build:
+      PATH=$PATH:/home/user/zig
+      HB_COMPILER=zig make -j8
+
+      Unix to Windows x64 cross:
+      PATH=$PATH:/home/user/zig
+      export HB_ZIG_TARGET=x86_64-windows
+      # (or) export HB_ZIG_TARGET=x86_64-windows-gnu
+      export HB_CPU=x86_64
+      # have to build a Harbour for your host first, for a native hbmk2
+      export HB_HOST_BIN=/home/user/harbour/bin/linux/zig
+      export HB_PLATFORM=win
+      export HB_BUILD_NAME=64cross
+      export HB_COMPILER=zig
+      make -j16
+
+      Windows native build:
+      PATH=C:\zig;%PATH%
+      set HB_COMPILER=zig
+      win-make -j8
+
+      Windows to Windows-on-ARM cross:
+      set HB_ZIG_TARGET=aarch64-windows
+      set HB_CPU=arm64
+      set HB_HOST_BIN=C:\harbour\bin\win\zig
+      set HB_COMPILER=zig
+      win-make -j8
+
+      Windows to Linux ARM64:
+      set HB_USER_CFLAGS=-fPIC
+      set HB_ZIG_TARGET=aarch64-linux
+      set HB_PLATFORM=linux
+      set HB_CPU=arm64
+      set HB_HOST_BIN=C:\harbour\bin\win\zig
+      set HB_COMPILER=zig
+      win-make -j8
+
+      Instead of setting HB_ZIG_TARGET, the less convenient way is:
+      HB_USER_CFLAGS=-target aarch64-linux
+      HB_USER_LDFLAGS=-target aarch64-linux
+      HB_USER_DFLAGS=-target aarch64-linux
+
+      Some target platforms need PIC mode even for static builds,
+      in such case add:
+      HB_USER_CFLAGS=-fPIC
+
+    ; TOFIX: shared lib symlinks are not created when cross-building from
+             Windows to Linux, could copy or adapt modern Windows counterpart
+
+             olectl.h is missing when cross-building hbwin contrib from
+             Linux to Windows (likely needs headers from Windows SDK)
+
+             basically a non issue, but HB_CPU and HB_PLATFORM are not guessed
+             from HB_ZIG_TARGET - conversion table seems to be doable, if
+             someone is interested in making a patch.
+
 2025-10-16 22:04 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * utils/hbmk2/hbmk2.prg
     * remaining LEFTEQUAL() changed to hb_LeftEq() calls
