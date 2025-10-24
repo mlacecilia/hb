@@ -2283,6 +2283,16 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
       ENDIF
    ENDIF
 
+   IF hb_LeftEq( hbmk[ _HBMK_cCOMP ], "msvc" ) .AND. Empty( cPath_CompC )
+      cPath_CompC := FindInPath( "cl.exe" )
+      IF Empty( cPath_CompC )
+         cPath_CompC := FindInPath( "link.exe" )
+         IF ! Empty( cPath_CompC )
+            cPath_CompC := hb_FNameDir( cPath_CompC ) + SubStr( hbmk[ _HBMK_cCOMP ], 5 ) + ".exe"
+         ENDIF
+      ENDIF
+   ENDIF
+
    DO CASE
    CASE hbmk[ _HBMK_cPLAT ] == "vxworks"
       AAdd( hbmk[ _HBMK_aINCPATH ], hb_DirSepToOS( GetEnv( "WIND_BASE" ) + "/target/usr/h" ) )
@@ -2366,28 +2376,43 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
             DO CASE
             CASE "VC98" $ cPath_CompC
                hbmk[ _HBMK_nCOMPVer ] := 1200
-            CASE "2003" $ cPath_CompC
+            CASE " 2003" + hb_ps() $ cPath_CompC
                hbmk[ _HBMK_nCOMPVer ] := 1300
-            CASE "8" + hb_ps() $ cPath_CompC /* Visual Studio 2005 */
+            CASE "Studio 8" + hb_ps() $ cPath_CompC /* Visual Studio 2005 */
                hbmk[ _HBMK_nCOMPVer ] := 1400
-            CASE "9.0" $ cPath_CompC /* Visual Studio 2008 or Windows SDK 7.0 */
+            CASE hb_ps() + "9.0" $ cPath_CompC /* Visual Studio 2008 or Windows SDK 7.0 */
                hbmk[ _HBMK_nCOMPVer ] := 1500
-            CASE "10.0" $ cPath_CompC /* Visual Studio 2010 or Windows SDK 7.1 */
+            CASE hb_ps() + "10.0" $ cPath_CompC /* Visual Studio 2010 or Windows SDK 7.1 */
                hbmk[ _HBMK_nCOMPVer ] := 1600
-            CASE "11.0" $ cPath_CompC /* Visual Studio 2012 */
+            CASE hb_ps() + "11.0" $ cPath_CompC /* Visual Studio 2012 */
                hbmk[ _HBMK_nCOMPVer ] := 1700
-            CASE "12.0" $ cPath_CompC /* Visual Studio 2013 */
+            CASE hb_ps() + "12.0" $ cPath_CompC /* Visual Studio 2013 */
                hbmk[ _HBMK_nCOMPVer ] := 1800
-            CASE "14.0" $ cPath_CompC /* Visual Studio 2015 */
+            CASE hb_ps() + "14.0" $ cPath_CompC /* Visual Studio 2015 */
                hbmk[ _HBMK_nCOMPVer ] := 1900
-            CASE "14.1" $ cPath_CompC /* Visual Studio 2017 */
+            CASE hb_ps() + "14.1" $ cPath_CompC /* Visual Studio 2017 */
                hbmk[ _HBMK_nCOMPVer ] := 1910
-            CASE "14.2" $ cPath_CompC /* Visual Studio 2019 */
+            CASE hb_ps() + "14.2" $ cPath_CompC /* Visual Studio 2019 */
                hbmk[ _HBMK_nCOMPVer ] := 1920
-            CASE "14.3" $ cPath_CompC /* Visual Studio 2022 */
+            CASE hb_ps() + "14.3" $ cPath_CompC /* Visual Studio 2022 */
                hbmk[ _HBMK_nCOMPVer ] := 1930
+            CASE hb_ps() + "14.4" $ cPath_CompC /* Visual Studio 2022 */
+               hbmk[ _HBMK_nCOMPVer ] := 1940
             OTHERWISE
-               hbmk[ _HBMK_nCOMPVer ] := 1400
+               /* trying to discover future versions of VS */
+               IF Empty( tmp := GetEnv( "VCTOOLSVERSION" ) )
+                  IF ! Empty( tmp := GetEnv( "VSINSTALLDIR" ) )
+                     tmp := hb_MemoRead( tmp + "VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt" )
+                  ENDIF
+               ENDIF
+               tmp := Int( Val( Left( tmp, At( ".", tmp ) ) + StrTran( SubStr( tmp, At( ".", tmp ) ), "." ) ) * 100 )
+               IF tmp >= 800 .AND. tmp < 1300
+                  hbmk[ _HBMK_nCOMPVer ] := tmp + 600
+               ELSEIF tmp >= 1400
+                  hbmk[ _HBMK_nCOMPVer ] := tmp + 500
+               ELSE
+                  hbmk[ _HBMK_nCOMPVer ] := 1400
+               ENDIF
             ENDCASE
          ENDIF
       ENDCASE
@@ -4447,6 +4472,9 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
          CASE hbmk[ _HBMK_cCOMP ] == "zig"
             cBin_CompCPP := "zig" + hbmk[ _HBMK_cCCEXT ] + " c++"
             cBin_CompC := iif( hbmk[ _HBMK_lCPP ] != NIL .AND. hbmk[ _HBMK_lCPP ], cBin_CompCPP, "zig" + hbmk[ _HBMK_cCCEXT ] + " cc" )
+            IF hbmk[ _HBMK_lGUI ]
+               AAdd( hbmk[ _HBMK_aOPTL ], "-Wl,/subsystem:windows" )
+            ENDIF
          CASE hbmk[ _HBMK_cCOMP ] == "tcc"
             cBin_CompCPP := "tcc.exe"
             cBin_CompC := cBin_CompCPP

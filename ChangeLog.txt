@@ -7,6 +7,29 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-10-23 21:45 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * src/vm/extrap.c
+    + added Windows ARM64 CPU register dump
+
+2025-10-23 19:53 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * utils/hbmk2/hbmk2.prg
+    * make the MSVC version detection based on paths a little less
+      trustful. With rolling releases of these MS tools, it's more
+      likely that "random" numbers will appear in dir names.
+
+2025-10-21 13:20 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * contrib/hbssl/hbssl.hbc
+    ! actually target VS 2017 for libcrypto, libssl
+
+  * utils/hbmk2/hbmk2.prg
+    ! slight rework of MSVC version detection, so it actually operates
+      with empty cPath_CompC variable
+
+    * also try to discover version number of future MSVC releases
+
+    * with Zig building GUI applications on Windows, hbmk2 will
+      now pass -Wl,/subsystem:windows to the linker
+
 2025-10-20 17:42 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbssl/hbssl.hbc
     ! actually lib* prefix should stay on win/msvc platform
