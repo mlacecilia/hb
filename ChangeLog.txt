@@ -7,6 +7,45 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-11-17 14:14 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  ; sync macros in-line with Viktor's fork:
+    2015-06-16 01:41 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * include/hbdefs.h
+    + add HB_PUT_UINT64(), HB_GET_UINT64() macros
+
+2025-11-17 09:58 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  + include/hbcrypto.h
+    ! actually add the file, missed from the push...
+
+2025-11-16 22:10 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  * config/win/zig.mk
+    ! in some Zig tests, building for Windows from UNIX shell (MSYS2
+      or cross compiling) resource compiler "zig rc" preferred options
+      passed with "-" instead of "/"
+
+2025-11-16 22:00 UTC+0200 Aleksander Czajczynski (hb fki.pl)
+  ; import hbcrypto.h header that allows reusing core sha functions
+    by contribs, coming from Viktor's fork:
+    2015-07-13 19:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+    2015-07-13 23:12 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  + include/hbcrypto.h
+    + move sha2 and hmac/sha2 related headers to Harbour
+      header directory so they can be used by other components.
+    + export sha2 and hmac/sha2 low-level functions from Harbour dynlib
+  * src/rtl/sha1.c
+  * src/rtl/sha1.h
+  * src/rtl/sha1hmac.c
+  * src/rtl/sha1hmac.h
+  * src/rtl/sha2.c
+  * src/rtl/sha2hmac.c
+  * src/rtl/hbsha1.c
+  * src/rtl/hbsha1hm.c
+  * src/rtl/hbsha2.c
+  * src/rtl/hbsha2hm.c
+    + use Harbour index type in low-level SHA code
+    % drop high-level hack compensating for fixed sized
+      low-level indexes in 64-bit builds
+
 2025-10-23 21:45 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   * src/vm/extrap.c
     + added Windows ARM64 CPU register dump
