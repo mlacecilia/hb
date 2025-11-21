@@ -59,7 +59,8 @@ HB_FUNC( WIN_LOADRESOURCE )
    /* Set default return value */
    hb_retc_null();
 
-   if( hb_winmainArgGet( &hInstance, NULL, NULL ) )
+   if( ! hb_winmainArgGet( &hInstance, NULL, NULL ) )
+      hInstance = GetModuleHandle( NULL );
    {
       void * hName;
       void * hType;

@@ -280,7 +280,12 @@ void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
 HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdShow )
 {
    if( phInstance )
-      *( ( HANDLE * ) phInstance ) = s_hInstance;
+      {
+      if( s_hInstance )
+         *( ( HANDLE * ) phInstance ) = s_hInstance;
+      else
+         *( ( HANDLE * ) phInstance ) = GetModuleHandle( NULL );
+      }
    if( phPrevInstance )
       *( ( HANDLE * ) phPrevInstance ) = s_hPrevInstance;
    if( piCmdShow )
