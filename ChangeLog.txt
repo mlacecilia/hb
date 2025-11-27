@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-11-22 12:40 UTC+0100 Aleksander Czajczynski (hb fki.pl)
+  * include/hbdefs.h
+    ! fix undefined behaviour on signed int overflow in
+      HB_GET_LE_INT24(), HB_GET_BE_INT24() macros
+      reported by runtime sanitizer (LLVM -fsanitize-trap=undefined)
+      panic: left shift of 255 by 24 places cannot be represented
+      in type 'HB_I32' (aka 'int')
+
 2025-11-17 14:14 UTC+0200 Aleksander Czajczynski (hb fki.pl)
   ; sync macros in-line with Viktor's fork:
     2015-06-16 01:41 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
