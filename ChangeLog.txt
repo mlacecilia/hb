@@ -7,6 +7,18 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-12-05 22:52 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/rtl/gttrm/gttrm.c
+    ! fixed memory leak
+
+2025-12-04 16:39 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/rtl/cdpapi.c
+    ! fixed hb_cdpUTF8StringPeek() to work with 0 based indexes and
+      Unicode characters > 0xFFFF
+
+  * src/rtl/hbmd5.c
+    ! removed redundant code (copy and past typo)
+
 2025-11-22 12:40 UTC+0100 Aleksander Czajczynski (hb fki.pl)
   * include/hbdefs.h
     ! fix undefined behaviour on signed int overflow in
