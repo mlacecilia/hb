@@ -7,6 +7,51 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-12-10 17:00 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/d2i.c
+    * use HB_SSL_CONST instead of explicit const for some ancient (<0.9.8)
+      OpenSSL versions
+
+2025-12-10 16:29 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/evpmd.c
+  * contrib/hbssl/hbssl.h
+    * moved hb_EVP_MD_ptr_to_id() function from static to public area
+
+  * contrib/hbssl/hbssl.hbx
+  * contrib/hbssl/hbssl.hbm
+  + contrib/hbssl/d2i.c
+    * added new functions to extract asynchronous keys and certificates
+      from DER data:
+         D2I_PUBKEY( <cDER> ) -> <pEVPKey>
+         D2I_RSAPUBLICKEY( <cDER> ) -> <pRSAKey>
+         D2I_X509( <cDER> ) -> <pX509Cert>
+
+  * contrib/hbssl/hbssl.hbx
+  * contrib/hbssl/evppkey.c
+    + added new functions to get/set RSA asymmetric keys parameters
+      encapsulated in EVP_PKEY structures:
+         EVP_PKEY_CTX_get_RSA_padding()
+         EVP_PKEY_CTX_set_RSA_padding()
+         EVP_PKEY_CTX_get_RSA_OAEP_md()
+         EVP_PKEY_CTX_set_RSA_OAEP_md()
+         EVP_PKEY_CTX_get_RSA_MGF1_md()
+         EVP_PKEY_CTX_set_RSA_MGF1_md()
+
+  * src/common/hbdate.c
+    * accept up to 9 fractional digits (nanoseconds) in timestamp strings
+      though only first three ones (milliseconds) are significant.
+      Recently some tools begin to generate such timestamp values and
+      Harbour had problems with decoding them correctly.
+
+  * src/compiler/hbmain.c
+    + allow to pass file name for source code compiled by hb_compileFromBuf()
+      It works like in all other versions of hb_compile*() functions - it's
+      enough to pass it as argument without option prefix (option prefix
+      is "-" on all platforms and also "/" on DOS, OS2, MS-Win).
+      Please remember that first parameter after control ones is used as
+      compiler name in generated output messages regardless of its option
+      prefix.
+
 2025-12-05 22:52 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * src/rtl/gttrm/gttrm.c
     ! fixed memory leak
