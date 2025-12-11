@@ -7,6 +7,31 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-12-11 00:15 UTC+0100 Aleksander Czajczynski (hb fki.pl)
+  * src/vm/macro.c
+    * workaround MinGW/GCC 15+ excessive diagnostics in hb_macroTextSymbol()
+      to fix strict mode in CI, manifested with either of those messages:
+      error: 'memcpy' specified bound 4294967295 exceeds maximum object size
+             2147483647 [-Werror=stringop-overflow=]
+      error: 'memcpy' accessing 4294967295 bytes at offsets 4 and 0 overlaps
+             6442450943 bytes at offset -2147483648 [-Werror=restrict]
+
+  * utils/hbmk2/hbmk2.prg
+    * applied bcc64 fixes from hbmk2.prg posted by Carlos Vargas on
+      harbour-devel (reformatted):
+      https://groups.google.com/g/harbour-devel/c/vic0m-VVZ8k
+
+    ; bcc64 support is not tested and purely based on contributions
+
+2025-12-10 22:37 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * README.md
+  * package/harbour.spec
+    + added --with localpng RPM build switch
+
+2025-12-10 22:22 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * src/rtl/cdpapi.c
+    ! added missing variable initialization
+
 2025-12-10 17:00 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/d2i.c
     * use HB_SSL_CONST instead of explicit const for some ancient (<0.9.8)
