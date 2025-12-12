@@ -7,6 +7,19 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-12-12 04:09 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * include/harbour.hbx
+  * src/harbour.def
+  * src/rtl/dateshb.c
+    + added new PRG function which converts UTC time to local time:
+          hb_UTCToTS( <tUTCTime> [, @<lUTCOffset> ) -> <tLocalTime>
+
+  * include/hbdate.h
+  * src/harbour.def
+  * src/common/hbdate.c
+    + added new C function which converts UTC time to local time:
+         double hb_timeUTCToLocal( double dTimeStamp, int * piUTCOffset );
+
 2025-12-11 00:15 UTC+0100 Aleksander Czajczynski (hb fki.pl)
   * src/vm/macro.c
     * workaround MinGW/GCC 15+ excessive diagnostics in hb_macroTextSymbol()
