@@ -7,6 +7,71 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2025-12-15 11:10 UTC+0100 Aleksander Czajczynski (hb fki.pl)
+  * src/vm/runner.c
+    ! fix indentation
+
+    ! previous change was not backwards compatible with hb_hrbLoad()
+      stealing character argument, that would be otherwise passed
+      to INIT PROCEDURE's in .hrb file
+
+  * src/include/hb_hrb.ch
+    + add HB_HRB_ARG_PRGNAME definition
+      use to pass "virtual" script.prg filename as third parameter
+      hb_hrbLoad( HB_HRB_ARG_PRGNAME + <nOptions>, cPCode, cFileName )
+
+2025-12-14 00:00 UTC-0300 Lailton Fernando Mariano (lailton/at/paysoft.com.br)
+  * src/vm/runner.c
+    * HB_HRBLOAD: support optional filename for in-memory HRB load
+      hb_hrbLoad( cPCode, cFileName )
+
+2025-12-14 03:10 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbzebra/datamtrx.c
+    * extended GCC excessive diagnostics workaround also for GCC-15 to fix
+      strict mode in CI
+
+2025-12-13 19:38 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * include/hbdate.h
+  * src/common/hbdate.c
+    * changed the following C functions:
+         HB_BOOL hb_timeStrGetUTC( const char * szTime,
+                                   int * piHour, int * piMinutes,
+                                   int * piSeconds,
+                                   int * piMSec, int * piUTCOffset );
+         HB_BOOL hb_timeStampStrGetUTC( const char * szDateTime,
+                                        int * piYear, int * piMonth,
+                                        int * piDay, int * piHour,
+                                        int * piMinutes, int * piSeconds,
+                                        int * piMSec, int * piUTCOffset );
+      to
+         HB_BOOL hb_timeStrGetUTC( const char * szTime,
+                                   int * piHour, int * piMinutes,
+                                   int * piSeconds,
+                                   int * piMSec, int * piUTCOffset,
+                                   HB_BOOL * pfUTC );
+         HB_BOOL hb_timeStampStrGetUTC( const char * szDateTime,
+                                        int * piYear, int * piMonth,
+                                        int * piDay, int * piHour,
+                                        int * piMinutes, int * piSeconds,
+                                        int * piMSec, int * piUTCOffset,
+                                        HB_BOOL * pfUTC );
+      Warning: incompatibility !!! New parameter HB_BOOL * pfUTC has been
+               added. These functions are used by Harbour internally but
+               if someone uses them in his code then he should add NULL
+               to passed parameters.
+    + added new C function:
+         HB_BOOL hb_timeStampStrGetDTU( const char * szDateTime,
+                                        long * plJulian, long * plMilliSec,
+                                        HB_BOOL * pfUTC );
+    ; the parameter pfUTC is used to retrieve information if time string
+      represents UTC time.
+
+  * src/rtl/dateshb.c
+    * added 2-nd parameter to hb_StrToTS() function which can be passed by
+      reference to retrieve information if time string represents UTC time.
+      Current syntax is:
+         hb_StrToTS( <cTimeStr> [, @<lUTC> ] ) -> <tTime>
+
 2025-12-12 04:09 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * include/harbour.hbx
   * src/harbour.def
