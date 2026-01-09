@@ -7,6 +7,56 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-01-09 17:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/ssl_hb.c
+    ! fixed buffer overflow
+    ! fixed GPF on wrong parameters
+
+2025-12-23 00:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/d2i.c
+  * contrib/hbssl/hbssl.hbx
+    * added new PRG function which converts ASN.1 DER SEQUENCE (RFC 3279) to
+      IEEE P1363 Fixed Field Concatenation ( R || S ):
+         D2I_ECDSA_SIG_RS( <cSigDER> ) -> <cSigRS>
+
+  * src/rtl/vfile.c
+    * comment formatting
+
+2025-12-21 12:06 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/x509.c
+    ! fixed compilation with OpenSSL < 1.1
+
+2025-12-21 10:45 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/hbssl.hbx
+  * contrib/hbssl/evppkey.c
+    + added new PRG functions:
+         EVP_PKEY_CTX_get_RSA_PSS_saltlen( <pKeyCTX>, @<nSaltLen> )
+               -> <nRetCode>
+         EVP_PKEY_CTX_set_RSA_PSS_saltlen( <pKeyCTX>, <nSaltLen> )
+               -> <nRetCode>
+         EVP_PKEY_CTX_get_signature_md( <pKeyCTX>, @<nEvpHash> )
+               -> <nRetCode>
+         EVP_PKEY_CTX_set_signature_md( <pKeyCTX>, <nEvpHash> | <cEvpHash> )
+               -> <nRetCode>
+         EVP_PKEY_sign_init( <pKeyCTX> ) -> <nRetCode>
+         EVP_PKEY_sign( <pKeyCTX>, @<cSignature>, <cData> ) -> <nRetCode>
+         EVP_PKEY_verify_init( <pKeyCTX> ) -> <nRetCode>
+         EVP_PKEY_verify( <pKeyCTX>, <cSignature>, <cData> ) -> <nRetCode>
+
+  * contrib/hbssl/hbssl.hbx
+  * contrib/hbssl/x509.c
+    + added new PRG function:
+         X509_get_serialNumber( <pX509> ) -> <nSerialNum>
+
+  * src/rtl/base64d.c
+    * indenting
+    ; question: With small modification we can add support for base64url
+                encoding (with additional parameter passed to hb_base64encode())
+                and decoding (can be done automatically by hb_base64decode()).
+                Do you think it's worth to do or it's such simple thing that
+                we should keep the code clean and user can make necessary
+                conversions themselves.
+
 2025-12-15 11:10 UTC+0100 Aleksander Czajczynski (hb fki.pl)
   * src/vm/runner.c
     ! fix indentation
