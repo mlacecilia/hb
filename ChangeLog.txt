@@ -7,6 +7,20 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-01-13 16:24 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    ! CURLOPT_KRBLEVEL has been deprecated since 8.17.0
+
+2026-01-13 14:37 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * include/harbour.hbx
+  * src/harbour.def
+  * src/rtl/version.c
+    + added new PRG function hb_osIsWine()
+
+  * src/rtl/gtxwc/gtxwc.c
+    + added small hack to retrive some key codes hidden by X*LookupString()
+
 2026-01-09 17:42 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbssl/ssl_hb.c
     ! fixed buffer overflow
