@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-01-17 12:21 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * ChangeLog.txt
+  * src/rtl/dateshb.c
+    ; fixed description of hb_UTCToTS() function, the second parameter should
+      be @<nUTCOffset> not @<lUTCOffset>, the correct syntax is:
+         hb_UTCToTS( <tUTCTime> [, @<nUTCOffset> ] ) -> <tLocalTime>
+      Thanks to Eric.
+
 2026-01-13 16:24 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/hbcurl/core.c
   * contrib/hbcurl/hbcurl.ch
@@ -141,7 +149,7 @@
   * src/harbour.def
   * src/rtl/dateshb.c
     + added new PRG function which converts UTC time to local time:
-          hb_UTCToTS( <tUTCTime> [, @<lUTCOffset> ) -> <tLocalTime>
+          hb_UTCToTS( <tUTCTime> [, @<nUTCOffset> ] ) -> <tLocalTime>
 
   * include/hbdate.h
   * src/harbour.def
