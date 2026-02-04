@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-02-04 00:37 UTC+0100 Aleksander Czajczynski (hb fki.pl)
+  * contrib/hbzebra/tests/pclqr.prg
+    + added small example on how a zebra produced QR-code 
+      can fit to a direct PCL5 printing pipeline
+
 2026-01-17 12:21 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * ChangeLog.txt
   * src/rtl/dateshb.c
