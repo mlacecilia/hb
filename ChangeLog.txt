@@ -7,9 +7,48 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-02-12 02:39 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * package/harbour.spec
+    + addedhbbmp library
+
+2026-02-08 04:06 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc.h
+  * contrib/gtqtc/gtqtc1.cpp
+    * try to find good monospace font at startup
+    * changed default font weight from bold to normal
+
+  * tests/gtkeys.prg
+    + added commented reference to HB_GTI_FONTA_NOSTRETCH and
+      HB_GTI_FONTNAME
+
+2026-02-07 20:58 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc1.cpp
+    * set HighDpiScaleFactorRoundingPolicy to Round for new QT versions
+      except Android builds.
+      It fixes problem with proportional fonts in QT6 though in some
+      environments it may not give the optimal results.
+      This setting can be overwritten at runtime by
+      QT_SCALE_FACTOR_ROUNDING_POLICY environment variable.
+
+2026-02-06 13:53 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc1.cpp
+  * contrib/gtqtc/gtqtc1.cpp
+    * use default GT startup code (#include "hbgtreg.h")
+    ! removed ChildRemoved event from list of events ending resize process,
+      it should fix resizing problem with current WMs.
+    + added small hack to easy detect QT version used to compile GTQTC
+    + added compile time switch HB_QTC_NO_HIGHDPI_SCALING
+      It's dirty hack to "fix" problem with font scaling in QT6 but it's
+      nit real solution. The same effect can be achieved by setting an
+      environment variable QT_ENABLE_HIGHDPI_SCALING=0 before application
+      using GTQTC is started so it's rather a marker to signal the problem.
+
+  * contrib/hbzebra/tests/pclqr.prg
+    * removed trailing spaces
+
 2026-02-04 00:37 UTC+0100 Aleksander Czajczynski (hb fki.pl)
   * contrib/hbzebra/tests/pclqr.prg
-    + added small example on how a zebra produced QR-code 
+    + added small example on how a zebra produced QR-code
       can fit to a direct PCL5 printing pipeline
 
 2026-01-17 12:21 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
