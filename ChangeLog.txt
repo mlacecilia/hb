@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-02-16 23:30 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc.hbp
+    ! give HB_WITH_QT higher priority then the general setting
+      HB_BUILD_3RDEXT=no
+
 2026-02-12 02:39 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * package/harbour.spec
     + addedhbbmp library
