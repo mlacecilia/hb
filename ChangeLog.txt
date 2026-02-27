@@ -7,6 +7,26 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-02-26 23:30 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc.hbx
+    * excluded HB_GT_QTC[3-7] functions
+
+2026-02-26 23:12 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/evppkey.c
+    ! added missing OpenSSL version check for new function
+      EVP_PKEY_get1_encoded_public_key().
+      OpenSSL 3.0.0 is required otherwise empty string is returned.
+
+  * contrib/gtqtc/gtqtc1.cpp
+    ! use QFontDatabase static members to not create depreciated in Qt6
+      QFontDatabase object instance
+
+2026-02-26 20:50 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/evppkey.c
+  * contrib/hbssl/hbssl.hbx
+    + added new PRG function
+         EVP_PKEY_get_encoded_public_key( <pKey> ) -> <cPubKeyData>
+
 2026-02-16 23:30 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/gtqtc/gtqtc.hbp
     ! give HB_WITH_QT higher priority then the general setting
