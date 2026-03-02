@@ -7,6 +7,18 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2026-02-28 15:33 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/hbssl/evppkey.c
+    ! disabled EVP_PKEY_get_encoded_public_key() in LibreSSL builds
+
+2026-02-27 21:27 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
+  * contrib/gtqtc/gtqtc1.cpp
+    * use Qt::MiddleButton: instead of case Qt::MidButton: in Qt5 builds
+
+  * contrib/hbssl/evppkey.c
+    * implemented EVP_PKEY_get_encoded_public_key() in OpenSSL 1.1 builds
+      using depreciated in 3.0 EVP_PKEY_get1_tls_encodedpoint()
+
 2026-02-26 23:30 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * contrib/gtqtc/gtqtc.hbx
     * excluded HB_GT_QTC[3-7] functions
