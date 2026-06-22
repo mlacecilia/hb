@@ -2,6 +2,6 @@ hbssl.hbm
 
 -hbx=
 
--stop{!allwin|hbdyn}
+-stop{!allwin|hbdyn|!HB_STATIC_OPENSSL}
 
 {allwin}-cflag=-DHB_OPENSSL_STATIC
