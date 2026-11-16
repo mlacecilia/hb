@@ -47,10 +47,13 @@
 /* HPDF_PDFA_SetPDFAConformance( pdf, nPDFAType ) --> hStatus */
 HB_FUNC( HPDF_PDFA_SETPDFACONFORMANCE )
 {
+#if HB_HPDF_VERS( 2, 4, 0 )
+   /* libharu >= 2.4: exported public API (hpdf.h), also usable in dynamic builds */
+   hb_retnl( ( long ) HPDF_SetPDFAConformance( hb_HPDF_Doc_par( 1 ), ( HPDF_PDFAType ) hb_parni( 2 ) ) );
 /* FIXME: These functions are not exported from libharu. Until we find
           out it is design decision or bug, I excluded them from dynamic
           builds. [vszakats] */
-#if HB_HPDF_VERS( 2, 2, 0 ) && ! defined( HB_DYNLIB )
+#elif HB_HPDF_VERS( 2, 2, 0 ) && ! defined( HB_DYNLIB )
    hb_retnl( HPDF_PDFA_SetPDFAConformance( hb_HPDF_Doc_par( 1 ), ( HPDF_PDFAType ) hb_parni( 2 ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );

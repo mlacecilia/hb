@@ -42,6 +42,7 @@ hpdfbool.c
 hpdfcata.c
 hpdfdest.c
 hpdfdict.c
+hpdfdire.c
 hpdfdoc.c
 hpdfdocp.c
 hpdfecy.c
@@ -86,6 +87,7 @@ hpdfpago.c
 hpdfpags.c
 hpdfpdfa.c
 hpdfreal.c
+hpdfshad.c
 hpdfstre.c
 hpdfstri.c
 hpdfu3d.c
@@ -93,8 +95,8 @@ hpdfutil.c
 hpdfxref.c
 
 # ORIGIN http://libharu.org/
-# VER    2.3.0RC3
-# URL    https://github.com/libharu/libharu/archive/RELEASE_2_3_0RC3.zip
+# VER    2.4.6
+# URL    https://github.com/libharu/libharu/archive/3467749fd1c0ab6ca6ed424d053b1ea53c1bf67c.zip
 # DIFF   libhpdf.diff
 #
 # MAP    README
@@ -106,6 +108,7 @@ hpdfxref.c
 # MAP    src/hpdf_catalog.c             hpdfcata.c
 # MAP    src/hpdf_destination.c         hpdfdest.c
 # MAP    src/hpdf_dict.c                hpdfdict.c
+# MAP    src/hpdf_direct.c              hpdfdire.c
 # MAP    src/hpdf_doc.c                 hpdfdoc.c
 # MAP    src/hpdf_doc_png.c             hpdfdocp.c
 # MAP    src/hpdf_encoder.c             hpdfenco.c
@@ -150,6 +153,7 @@ hpdfxref.c
 # MAP    src/hpdf_pages.c               hpdfpags.c
 # MAP    src/hpdf_pdfa.c                hpdfpdfa.c
 # MAP    src/hpdf_real.c                hpdfreal.c
+# MAP    src/hpdf_shading.c             hpdfshad.c
 # MAP    src/hpdf_streams.c             hpdfstre.c
 # MAP    src/hpdf_string.c              hpdfstri.c
 # MAP    src/hpdf_u3d.c                 hpdfu3d.c

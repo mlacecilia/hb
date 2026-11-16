@@ -26,12 +26,14 @@ DYNAMIC hb_HPDF_IsVersion
 DYNAMIC hb_HPDF_Version
 DYNAMIC HPDF_AddPage
 DYNAMIC HPDF_AddPageLabel
+DYNAMIC HPDF_AddPDFAXmpExtension
 DYNAMIC HPDF_Annotation_SetBorderStyle
 DYNAMIC HPDF_Annot_Set3DView
 DYNAMIC HPDF_Annot_SetCMYKColor
 DYNAMIC HPDF_Annot_SetGrayColor
 DYNAMIC HPDF_Annot_SetNoColor
 DYNAMIC HPDF_Annot_SetRGBColor
+DYNAMIC HPDF_AppendOutputIntents
 DYNAMIC HPDF_AttachFile
 DYNAMIC HPDF_CheckError
 DYNAMIC HPDF_CreateExtGState
@@ -44,6 +46,11 @@ DYNAMIC HPDF_Destination_SetFitH
 DYNAMIC HPDF_Destination_SetFitR
 DYNAMIC HPDF_Destination_SetFitV
 DYNAMIC HPDF_Destination_SetXYZ
+DYNAMIC HPDF_EmbeddedFile_SetAFRelationship
+DYNAMIC HPDF_EmbeddedFile_SetDescription
+DYNAMIC HPDF_EmbeddedFile_SetName
+DYNAMIC HPDF_EmbeddedFile_SetSize
+DYNAMIC HPDF_EmbeddedFile_SetSubtype
 DYNAMIC HPDF_Encoder_GetByteType
 DYNAMIC HPDF_Encoder_GetType
 DYNAMIC HPDF_Encoder_GetUnicode
@@ -106,6 +113,7 @@ DYNAMIC HPDF_LoadRawImageFromFile
 DYNAMIC HPDF_LoadRawImageFromMem
 DYNAMIC HPDF_LoadTTFontFromFile
 DYNAMIC HPDF_LoadTTFontFromFile2
+DYNAMIC HPDF_LoadTTFontFromMemory
 DYNAMIC HPDF_LoadType1FontFromFile
 DYNAMIC HPDF_MarkupAnnot_SetCloudEffect
 DYNAMIC HPDF_MarkupAnnot_SetCreationDate
@@ -200,6 +208,7 @@ DYNAMIC HPDF_Page_MoveTextPos2
 DYNAMIC HPDF_Page_MoveTo
 DYNAMIC HPDF_Page_MoveToNextLine
 DYNAMIC HPDF_Page_Rectangle
+DYNAMIC HPDF_Page_SetBoundary
 DYNAMIC HPDF_Page_SetCharSpace
 DYNAMIC HPDF_Page_SetCMYKFill
 DYNAMIC HPDF_Page_SetCMYKStroke
@@ -217,6 +226,7 @@ DYNAMIC HPDF_Page_SetMiterLimit
 DYNAMIC HPDF_Page_SetRGBFill
 DYNAMIC HPDF_Page_SetRGBStroke
 DYNAMIC HPDF_Page_SetRotate
+DYNAMIC HPDF_Page_SetShading
 DYNAMIC HPDF_Page_SetSize
 DYNAMIC HPDF_Page_SetSlideShow
 DYNAMIC HPDF_Page_SetTextLeading
@@ -252,6 +262,8 @@ DYNAMIC HPDF_SetPageMode
 DYNAMIC HPDF_SetPagesConfiguration
 DYNAMIC HPDF_SetPassword
 DYNAMIC HPDF_SetPermission
+DYNAMIC HPDF_Shading_AddVertexRGB
+DYNAMIC HPDF_Shading_New
 DYNAMIC HPDF_TextAnnot_SetIcon
 DYNAMIC HPDF_TextAnnot_SetOpened
 DYNAMIC HPDF_TextMarkupAnnot_SetQuadPoints

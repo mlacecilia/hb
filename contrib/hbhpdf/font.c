@@ -84,3 +84,14 @@ HB_FUNC( HPDF_LOADTTFONTFROMFILE2 )
    if( pszFree )
       hb_xfree( pszFree );
 }
+
+/* HPDF_LoadTTFontFromMemory( hDoc, cTTFontData, lEmbed ) --> cFontName */
+HB_FUNC( HPDF_LOADTTFONTFROMMEMORY )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   /* NOTE: libharu copies the data into its own memory stream */
+   hb_retc( HPDF_LoadTTFontFromMemory( hb_HPDF_Doc_par( 1 ), ( const HPDF_BYTE * ) hb_parc( 2 ), ( HPDF_UINT ) hb_parclen( 2 ), hb_parl( 3 ) ? HPDF_TRUE : HPDF_FALSE ) );
+#else
+   hb_retc_null();
+#endif
+}

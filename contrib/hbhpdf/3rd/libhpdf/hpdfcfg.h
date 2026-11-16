@@ -9,8 +9,12 @@
 /* Define to 1 if you have the `png' library (-lpng). */
 #define HAVE_LIBPNG 1
 
+/* libharu >= 2.4: PNG/zlib support is opt-in via these macros */
+#define LIBHPDF_HAVE_LIBPNG 1
+
 /* Define to 1 if you have the `z' library (-lz). */
 #define HAVE_LIBZ 1
+#define LIBHPDF_HAVE_ZLIB 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H

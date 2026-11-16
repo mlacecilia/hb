@@ -210,7 +210,9 @@ HB_FUNC( HPDF_SETPAGESCONFIGURATION )
    HPDF_PAGE_LAYOUT_ONE_COLUMN         1
    HPDF_PAGE_LAYOUT_TWO_COLUMN_LEFT    2
    HPDF_PAGE_LAYOUT_TWO_COLUMN_RIGHT   3
-   HPDF_PAGE_LAYOUT_EOF                4
+   HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT      4  (libharu >= 2.3.0)
+   HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT     5  (libharu >= 2.3.0)
+   HPDF_PAGE_LAYOUT_EOF                6
  */
 HB_FUNC( HPDF_SETPAGELAYOUT )
 {
@@ -837,10 +839,24 @@ HB_FUNC( HPDF_PAGE_SETDASH )
    int nPtns = hb_parni( 3 );
    int i;
 
+   /* libharu accepts at most 8 dash pattern elements */
+   if( nPtns < 0 )
+      nPtns = 0;
+   else if( nPtns > 8 )
+      nPtns = 8;
+
+#if HB_HPDF_VERS( 2, 4, 0 )
+   /* libharu >= 2.4: dash pattern and phase are HPDF_REAL */
+   for( i = 0; i < nPtns; i++ )
+      dash.ptn[ i ] = ( HPDF_REAL ) hb_parvnd( 2, i + 1 );
+
+   hb_retnl( ( long ) HPDF_Page_SetDash( ( HPDF_Page ) hb_parptr( 1 ), dash.ptn, ( HPDF_UINT ) nPtns, ( HPDF_REAL ) hb_parnd( 4 ) ) );
+#else
    for( i = 0; i < nPtns; i++ )
       dash.ptn[ i ] = ( HPDF_UINT16 ) hb_parvni( 2, i + 1 );
 
    hb_retnl( ( long ) HPDF_Page_SetDash( ( HPDF_Page ) hb_parptr( 1 ), dash.ptn, nPtns, hb_parni( 4 ) ) );
+#endif
 }
 
 /* HPDF_Page_SetExtGState( hPage, hGState ) --> hStatus */
@@ -1493,6 +1509,147 @@ HB_FUNC( HPDF_USEUTFENCODINGS )
 {
 #if HB_HPDF_VERS( 2, 3, 0 )
    hb_retnl( HPDF_UseUTFEncodings( hb_HPDF_Doc_par( 1 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* --- New Functions in LibHaru 2.4.0 --- */
+
+/* HPDF_Page_SetBoundary( hPage, nBoundary, nLeft, nBottom, nRight, nTop ) --> nStatus
+        nBoundary ==
+   HPDF_PAGE_MEDIABOX                  0
+   HPDF_PAGE_CROPBOX                   1
+   HPDF_PAGE_BLEEDBOX                  2
+   HPDF_PAGE_TRIMBOX                   3
+   HPDF_PAGE_ARTBOX                    4
+ */
+HB_FUNC( HPDF_PAGE_SETBOUNDARY )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_Page_SetBoundary( ( HPDF_Page ) hb_parptr( 1 ), ( HPDF_PageBoundary ) hb_parni( 2 ),
+                                             ( HPDF_REAL ) hb_parnd( 3 ), ( HPDF_REAL ) hb_parnd( 4 ),
+                                             ( HPDF_REAL ) hb_parnd( 5 ), ( HPDF_REAL ) hb_parnd( 6 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_AddPDFAXmpExtension( hDoc, cXmpDescription ) --> nStatus */
+HB_FUNC( HPDF_ADDPDFAXMPEXTENSION )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_AddPDFAXmpExtension( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_AppendOutputIntents( hDoc, cIccName, pIccDict ) --> nStatus */
+HB_FUNC( HPDF_APPENDOUTPUTINTENTS )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_AppendOutputIntents( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ), ( HPDF_Dict ) hb_parptr( 3 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_Shading_New( hDoc, nType, nColorSpace, nXMin, nXMax, nYMin, nYMax ) --> pShading
+        nType ==
+   HPDF_SHADING_FREE_FORM_TRIANGLE_MESH 4
+ */
+HB_FUNC( HPDF_SHADING_NEW )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retptr( ( HPDF_Shading ) HPDF_Shading_New( hb_HPDF_Doc_par( 1 ), ( HPDF_ShadingType ) hb_parni( 2 ), ( HPDF_ColorSpace ) hb_parni( 3 ),
+                                                 ( HPDF_REAL ) hb_parnd( 4 ), ( HPDF_REAL ) hb_parnd( 5 ),
+                                                 ( HPDF_REAL ) hb_parnd( 6 ), ( HPDF_REAL ) hb_parnd( 7 ) ) );
+#else
+   hb_retptr( NULL );
+#endif
+}
+
+/* HPDF_Shading_AddVertexRGB( pShading, nEdgeFlag, nX, nY, nR, nG, nB ) --> nStatus
+        nEdgeFlag ==
+   HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_NO_CONNECTION 0
+   HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_BC            1
+   HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_AC            2
+ */
+HB_FUNC( HPDF_SHADING_ADDVERTEXRGB )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_Shading_AddVertexRGB( ( HPDF_Shading ) hb_parptr( 1 ), ( HPDF_Shading_FreeFormTriangleMeshEdgeFlag ) hb_parni( 2 ),
+                                                 ( HPDF_REAL ) hb_parnd( 3 ), ( HPDF_REAL ) hb_parnd( 4 ),
+                                                 ( HPDF_UINT8 ) hb_parni( 5 ), ( HPDF_UINT8 ) hb_parni( 6 ), ( HPDF_UINT8 ) hb_parni( 7 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_Page_SetShading( hPage, pShading ) --> nStatus */
+HB_FUNC( HPDF_PAGE_SETSHADING )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   HPDF_Shading shading = ( HPDF_Shading ) hb_parptr( 2 );
+
+   /* NOTE: libharu does not check for NULL here (e.g. when HPDF_Shading_New() failed) */
+   if( shading )
+      hb_retnl( ( long ) HPDF_Page_SetShading( ( HPDF_Page ) hb_parptr( 1 ), shading ) );
+   else
+      hb_retnl( ( long ) HPDF_INVALID_OBJECT );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_EmbeddedFile_SetName( pEmbeddedFile, cName ) --> nStatus */
+HB_FUNC( HPDF_EMBEDDEDFILE_SETNAME )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_EmbeddedFile_SetName( ( HPDF_EmbeddedFile ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_EmbeddedFile_SetDescription( pEmbeddedFile, cDescription ) --> nStatus */
+HB_FUNC( HPDF_EMBEDDEDFILE_SETDESCRIPTION )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_EmbeddedFile_SetDescription( ( HPDF_EmbeddedFile ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_EmbeddedFile_SetSubtype( pEmbeddedFile, cMimeSubtype ) --> nStatus */
+HB_FUNC( HPDF_EMBEDDEDFILE_SETSUBTYPE )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_EmbeddedFile_SetSubtype( ( HPDF_EmbeddedFile ) hb_parptr( 1 ), hb_parc( 2 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_EmbeddedFile_SetSize( pEmbeddedFile, nSize ) --> nStatus */
+HB_FUNC( HPDF_EMBEDDEDFILE_SETSIZE )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_EmbeddedFile_SetSize( ( HPDF_EmbeddedFile ) hb_parptr( 1 ), ( HPDF_UINT64 ) hb_parnint( 2 ) ) );
+#else
+   hb_retnl( HB_HPDF_NOTSUPPORTED );
+#endif
+}
+
+/* HPDF_EmbeddedFile_SetAFRelationship( pEmbeddedFile, nRelationship ) --> nStatus
+        nRelationship == HPDF_AFRELATIONSHIP_*
+ */
+HB_FUNC( HPDF_EMBEDDEDFILE_SETAFRELATIONSHIP )
+{
+#if HB_HPDF_VERS( 2, 4, 0 )
+   hb_retnl( ( long ) HPDF_EmbeddedFile_SetAFRelationship( ( HPDF_EmbeddedFile ) hb_parptr( 1 ), ( HPDF_AFRelationship ) hb_parni( 2 ) ) );
 #else
    hb_retnl( HB_HPDF_NOTSUPPORTED );
 #endif

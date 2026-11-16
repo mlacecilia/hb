@@ -58,7 +58,9 @@
 #define HPDF_INFO_TITLE                     5
 #define HPDF_INFO_SUBJECT                   6
 #define HPDF_INFO_KEYWORDS                  7
-#define HPDF_INFO_EOF                       8
+#define HPDF_INFO_TRAPPED                   8   /* libharu >= 2.4.0 */
+#define HPDF_INFO_GTS_PDFX                  9   /* libharu >= 2.4.0 */
+#define HPDF_INFO_EOF                       10
 
 /* HPDF_PdfVer */
 #define HPDF_VER_12                         0
@@ -66,7 +68,9 @@
 #define HPDF_VER_14                         2
 #define HPDF_VER_15                         3
 #define HPDF_VER_16                         4
-#define HPDF_VER_EOF                        5
+#define HPDF_VER_17                         5   /* libharu >= 2.4.0 */
+#define HPDF_VER_20                         6   /* libharu >= 2.4.0 */
+#define HPDF_VER_EOF                        7
 
 /* HPDF_EncryptMode */
 #define HPDF_ENCRYPT_R2                     2
@@ -119,7 +123,9 @@
 #define HPDF_PAGE_LAYOUT_ONE_COLUMN         1
 #define HPDF_PAGE_LAYOUT_TWO_COLUMN_LEFT    2
 #define HPDF_PAGE_LAYOUT_TWO_COLUMN_RIGHT   3
-#define HPDF_PAGE_LAYOUT_EOF                4
+#define HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT      4   /* libharu >= 2.3.0 */
+#define HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT     5   /* libharu >= 2.3.0 */
+#define HPDF_PAGE_LAYOUT_EOF                6
 
 /* HPDF_PageMode */
 #define HPDF_PAGE_MODE_USE_NONE             0
@@ -769,8 +775,43 @@
 #define HPDF_GMODE_EXTERNAL_OBJECT          0x0040
 
 /* PDF/A mode */
+#define HPDF_PDFA_NON_PDFA                  -1  /* libharu >= 2.4.0 */
 #define HPDF_PDFA_1A                        0
 #define HPDF_PDFA_1B                        1
+#define HPDF_PDFA_2A                        2   /* libharu >= 2.4.0 */
+#define HPDF_PDFA_2B                        3
+#define HPDF_PDFA_2U                        4
+#define HPDF_PDFA_3A                        5
+#define HPDF_PDFA_3B                        6
+#define HPDF_PDFA_3U                        7
+#define HPDF_PDFA_4                         8
+#define HPDF_PDFA_4E                        9
+#define HPDF_PDFA_4F                        10
+
+/* HPDF_AFRelationship (libharu >= 2.4.0) */
+#define HPDF_AFRELATIONSHIP_SOURCE          0
+#define HPDF_AFRELATIONSHIP_DATA            1
+#define HPDF_AFRELATIONSHIP_ALTERNATIVE     2
+#define HPDF_AFRELATIONSHIP_SUPPLEMENT      3
+#define HPDF_AFRELATIONSHIP_ENCRYPTEDPAYLOAD 4
+#define HPDF_AFRELATIONSHIP_FORMDATA        5
+#define HPDF_AFRELATIONSHIP_SCHEMA          6
+#define HPDF_AFRELATIONSHIP_UNSPECIFIED     7
+
+/* HPDF_PageBoundary (libharu >= 2.4.0) */
+#define HPDF_PAGE_MEDIABOX                  0
+#define HPDF_PAGE_CROPBOX                   1
+#define HPDF_PAGE_BLEEDBOX                  2
+#define HPDF_PAGE_TRIMBOX                   3
+#define HPDF_PAGE_ARTBOX                    4
+
+/* HPDF_ShadingType (libharu >= 2.4.0) */
+#define HPDF_SHADING_FREE_FORM_TRIANGLE_MESH 4
+
+/* HPDF_Shading_FreeFormTriangleMeshEdgeFlag (libharu >= 2.4.0) */
+#define HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_NO_CONNECTION 0
+#define HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_BC 1
+#define HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_AC 2
 
 /* Error code */
 
@@ -799,7 +840,8 @@
 /*                                          0x1012 */
 #define HPDF_ERR_UNKNOWN_CLASS              0x1013
 #define HPDF_EXCEED_GSTATE_LIMIT            0x1014
-#define HPDF_FAILD_TO_ALLOC_MEM             0x1015
+#define HPDF_FAILD_TO_ALLOC_MEM             0x1015  /* old (misspelled) name, kept for compatibility */
+#define HPDF_FAILED_TO_ALLOC_MEM            0x1015
 #define HPDF_FILE_IO_ERROR                  0x1016
 #define HPDF_FILE_OPEN_ERROR                0x1017
 /*                                          0x1018 */
@@ -900,5 +942,7 @@
 #define HPDF_INVALID_U3D_DATA               0x1083
 #define HPDF_NAME_CANNOT_GET_NAMES          0x1084
 #define HPDF_INVALID_ICC_COMPONENT_NUM      0x1085
+#define HPDF_PAGE_INVALID_BOUNDARY          0x1086
+#define HPDF_INVALID_SHADING_TYPE           0x1088
 
 #endif /* _HARUPDF_CH */

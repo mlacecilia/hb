@@ -15,9 +15,9 @@ skip={dos}
 {!HB_DYNBIND_OPENSSL&os2}libs=libssl_s libcrypto_s
 {!HB_DYNBIND_OPENSSL&win&!allmingw&!allmsvc&!clang&!zig}libs=ssleay32 libeay32
 {!HB_DYNBIND_OPENSSL&allmsvc&HB_COMP_VER<'1910'}libs=ssleay32 libeay32
-{!HB_DYNBIND_OPENSSL&win&(allmingw|clang|zig)}libs=ssl crypto
+{!HB_DYNBIND_OPENSSL&win&(allmingw|clang|zig)}libs=ssl crypto bcrypt
 {!HB_DYNBIND_OPENSSL&allmsvc&HB_COMP_VER>'1909'}libs=libssl libcrypto
 {!HB_DYNBIND_OPENSSL&allwin}libs=crypt32
 
-{HB_STATIC_OPENSSL&!hbdyn&win&(allmingw|clang|zig)}libs=ssl crypto crypt32
-{HB_STATIC_OPENSSL&!hbdyn&win&!allmingw&!clang&!zig}libs=libssl libcrypto crypt32
+{HB_STATIC_OPENSSL&!hbdyn&win&(allmingw|clang|zig)}libs=ssl crypto bcrypt 
+{HB_STATIC_OPENSSL&!hbdyn&win&!allmingw&!clang&!zig}libs=libssl libcrypto libbcrypt
