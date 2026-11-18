@@ -52,6 +52,7 @@ jobs:
           location: d:/
           update: true
           install: >
+            mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
             mingw-w64-${{ env.msys_cpu }}-bzip2
             mingw-w64-${{ env.msys_cpu }}-curl
