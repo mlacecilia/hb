@@ -52,13 +52,9 @@ jobs:
           location: d:/
           update: true
           install: >
-            mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
-            mingw-w64-${{ env.msys_cpu }}-make
             mingw-w64-${{ env.msys_cpu }}-bzip2
-            mingw-w64-${{ env.msys_cpu }}-cairo
             mingw-w64-${{ env.msys_cpu }}-curl
-            mingw-w64-${{ env.msys_cpu }}-ghostscript
             mingw-w64-${{ env.msys_cpu }}-openssl
             openssl-devel
 
