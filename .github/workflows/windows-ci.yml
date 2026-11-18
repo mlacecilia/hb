@@ -55,7 +55,6 @@ jobs:
             mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
             mingw-w64-${{ env.msys_cpu }}-make
-            mingw-w64-${{ env.msys_cpu }}-allegro
             mingw-w64-${{ env.msys_cpu }}-bzip2
             mingw-w64-${{ env.msys_cpu }}-cairo
             mingw-w64-${{ env.msys_cpu }}-curl
