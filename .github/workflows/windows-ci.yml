@@ -12,10 +12,17 @@ jobs:
       fail-fast: false
       matrix:
         compiler:
+          - bcc
           - mingw64
           - clang
         cpu:
+          - x86
           - x86_64
+        exclude:
+          - compiler: bcc
+            cpu: x86_64
+          - compiler: clang
+            cpu: x86
         strictness:
           - "normal"
           - "strict"
@@ -47,8 +54,12 @@ jobs:
           install: >
             mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
+            mingw-w64-${{ env.msys_cpu }}-make
+            mingw-w64-${{ env.msys_cpu }}-allegro
             mingw-w64-${{ env.msys_cpu }}-bzip2
+            mingw-w64-${{ env.msys_cpu }}-cairo
             mingw-w64-${{ env.msys_cpu }}-curl
+            mingw-w64-${{ env.msys_cpu }}-ghostscript
             mingw-w64-${{ env.msys_cpu }}-openssl
             openssl-devel
 
