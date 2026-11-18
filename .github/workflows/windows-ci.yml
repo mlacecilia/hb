@@ -12,17 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         compiler:
-          - bcc
           - mingw64
           - clang
         cpu:
-          - x86
           - x86_64
-        exclude:
-          - compiler: bcc
-            cpu: x86_64
-          - compiler: clang
-            cpu: x86
         strictness:
           - "normal"
           - "strict"
