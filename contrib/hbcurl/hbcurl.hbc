@@ -10,7 +10,8 @@ headers=${hb_name}.ch
 {!allwin}libs=curl
 { allwin&!(HB_STATIC_CURL&!hbdyn)}libs=libcurl
 { allwin& (HB_STATIC_CURL&!hbdyn)&!allmingw}libs=libcurl libssh2
-{ allwin& (HB_STATIC_CURL&!hbdyn)& allmingw}libs=curl ssh2
+{ allwin& (HB_STATIC_CURL&!hbdyn)& allmingw}libpaths=${HB_WITH_CURL}\..\lib
+{ allwin& (HB_STATIC_CURL&!hbdyn)& allmingw}libs=curl ssh2 ssl bcrypt wldap32 zstd brotlicommon brotlidec brotlienc crypto ngtcp2 nghttp3 nghttp2 ngtcp2_crypto_ossl secur32 psl idn2 unistring iconv crypt32
 
 # NOTE: Static mode requires additional libs be linked:
 #       OpenSSL
